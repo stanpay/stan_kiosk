@@ -1,13 +1,3 @@
-export type StoreFilterChipId =
-  | "all"
-  | "chilsungro"
-  | "localCurrency"
-  | "highOilSupport"
-  | "restaurant"
-  | "cafe"
-  | "shopping"
-  | "other";
-
 export type StoreAreaFilterChipId =
   | "all"
   | "areaChilsungro"
@@ -21,25 +11,12 @@ export const STORE_AREA_FILTER_CHIP_ORDER: StoreAreaFilterChipId[] = [
   "areaUndergroundMall",
 ];
 
-export type BenefitFilterChipId =
-  | "all"
-  | "chilsungro"
-  | "localCurrency"
-  | "highOilSupport";
-
 export type CategoryFilterChipId =
   | "all"
   | "restaurant"
   | "cafe"
   | "shopping"
   | "other";
-
-export const BENEFIT_FILTER_CHIP_ORDER: BenefitFilterChipId[] = [
-  "all",
-  "chilsungro",
-  "localCurrency",
-  "highOilSupport",
-];
 
 export const STORE_CATEGORY_CHIP_ORDER: CategoryFilterChipId[] = [
   "all",
@@ -52,14 +29,10 @@ export const STORE_CATEGORY_CHIP_ORDER: CategoryFilterChipId[] = [
 export type StoreLikeForChip = {
   category?: string | null;
   area?: string | null;
-  localpay?: boolean;
-  oil_subsidy?: boolean;
-  downtown_coupon?: boolean;
 };
 
 export type StoreChipSelection = {
   area: ReadonlySet<StoreAreaFilterChipId>;
-  benefit: ReadonlySet<BenefitFilterChipId>;
   category: ReadonlySet<CategoryFilterChipId>;
 };
 
@@ -113,18 +86,6 @@ export function storeMatchesAreaChipFilters(
   return parts.length > 0 && parts.some(Boolean);
 }
 
-export function storeMatchesBenefitChipFilters(
-  store: StoreLikeForChip,
-  chips: ReadonlySet<BenefitFilterChipId>,
-): boolean {
-  if (chips.has("all")) return true;
-  const parts: boolean[] = [];
-  if (chips.has("chilsungro")) parts.push(store.downtown_coupon === true);
-  if (chips.has("localCurrency")) parts.push(store.localpay === true);
-  if (chips.has("highOilSupport")) parts.push(store.oil_subsidy === true);
-  return parts.length > 0 && parts.some(Boolean);
-}
-
 export function storeMatchesCategoryChipFilters(
   store: StoreLikeForChip,
   chips: ReadonlySet<CategoryFilterChipId>,
@@ -144,7 +105,6 @@ export function storeMatchesAllChipFilters(
 ): boolean {
   return (
     storeMatchesAreaChipFilters(store, chips.area) &&
-    storeMatchesBenefitChipFilters(store, chips.benefit) &&
     storeMatchesCategoryChipFilters(store, chips.category)
   );
 }

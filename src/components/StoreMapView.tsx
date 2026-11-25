@@ -5,7 +5,6 @@ import { loadNaverMaps } from "../lib/naverMaps";
 import {
   storeMatchesAllChipFilters,
   toggleChipSelection,
-  type BenefitFilterChipId,
   type CategoryFilterChipId,
   type StoreAreaFilterChipId,
   type StoreChipSelection,
@@ -136,9 +135,6 @@ export default function StoreMapView() {
   const [areaChips, setAreaChips] = useState<Set<StoreAreaFilterChipId>>(
     () => new Set(["all"]),
   );
-  const [benefitChips, setBenefitChips] = useState<Set<BenefitFilterChipId>>(
-    () => new Set(["all"]),
-  );
   const [categoryChips, setCategoryChips] = useState<Set<CategoryFilterChipId>>(
     () => new Set(["all"]),
   );
@@ -146,10 +142,9 @@ export default function StoreMapView() {
   const chipSelection = useMemo<StoreChipSelection>(
     () => ({
       area: areaChips,
-      benefit: benefitChips,
       category: categoryChips,
     }),
-    [areaChips, benefitChips, categoryChips],
+    [areaChips, categoryChips],
   );
 
   const filteredStores = useMemo(
@@ -341,13 +336,9 @@ export default function StoreMapView() {
 
       <StoreFilterBar
         areaChips={areaChips}
-        benefitChips={benefitChips}
         categoryChips={categoryChips}
         onToggleArea={(id) =>
           setAreaChips((prev) => toggleChipSelection(prev, id, "all"))
-        }
-        onToggleBenefit={(id) =>
-          setBenefitChips((prev) => toggleChipSelection(prev, id, "all"))
         }
         onToggleCategory={(id) =>
           setCategoryChips((prev) => toggleChipSelection(prev, id, "all"))

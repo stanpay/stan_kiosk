@@ -1,8 +1,6 @@
 import {
-  BENEFIT_FILTER_CHIP_ORDER,
   STORE_AREA_FILTER_CHIP_ORDER,
   STORE_CATEGORY_CHIP_ORDER,
-  type BenefitFilterChipId,
   type CategoryFilterChipId,
   type StoreAreaFilterChipId,
 } from "../lib/storeFilters";
@@ -12,13 +10,6 @@ const AREA_LABELS: Record<StoreAreaFilterChipId, string> = {
   areaChilsungro: "칠성로상점가",
   areaJungangro: "중앙로상점가",
   areaUndergroundMall: "중앙지하상가",
-};
-
-const BENEFIT_LABELS: Record<BenefitFilterChipId, string> = {
-  all: "전체",
-  chilsungro: "여행자 소비쿠폰",
-  localCurrency: "지역화폐",
-  highOilSupport: "고유가 지원금",
 };
 
 const CATEGORY_LABELS: Record<CategoryFilterChipId, string> = {
@@ -31,10 +22,8 @@ const CATEGORY_LABELS: Record<CategoryFilterChipId, string> = {
 
 type StoreFilterBarProps = {
   areaChips: ReadonlySet<StoreAreaFilterChipId>;
-  benefitChips: ReadonlySet<BenefitFilterChipId>;
   categoryChips: ReadonlySet<CategoryFilterChipId>;
   onToggleArea: (id: StoreAreaFilterChipId) => void;
-  onToggleBenefit: (id: BenefitFilterChipId) => void;
   onToggleCategory: (id: CategoryFilterChipId) => void;
 };
 
@@ -97,10 +86,8 @@ function ChipRow<T extends string>({
 
 export default function StoreFilterBar({
   areaChips,
-  benefitChips,
   categoryChips,
   onToggleArea,
-  onToggleBenefit,
   onToggleCategory,
 }: StoreFilterBarProps) {
   return (
@@ -111,13 +98,6 @@ export default function StoreFilterBar({
         activeChips={areaChips}
         labelMap={AREA_LABELS}
         onToggle={onToggleArea}
-      />
-      <ChipRow
-        ariaLabel="할인 필터"
-        order={BENEFIT_FILTER_CHIP_ORDER}
-        activeChips={benefitChips}
-        labelMap={BENEFIT_LABELS}
-        onToggle={onToggleBenefit}
       />
       <ChipRow
         ariaLabel="카테고리 필터"

@@ -62,3 +62,4 @@ stan_web_reference/
 # Design source assets (too large for GitHub)
 칠성로 소스/
 칠성로 소스.zip
+.env*
